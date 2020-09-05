@@ -1,0 +1,90 @@
+---
+title: "Lab_2"
+author: "J. Navelski"
+date: "9/4/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What can R Markdown do?
+
+\section{Compile Code}
+
+1) It can compile r code.
+
+```{r}
+
+
+x = seq(0,1,by=.01)
+y = x^{2}
+y[1:10]
+
+```
+
+```{r, fig.width=3,fig.height=3}
+
+hist(y) ##histogram of 7
+
+```
+
+\section{Compile math }
+
+In line with math $y=x^{2}$ and display math is two dollar signs, e.g.
+
+$$y = mx+b \\
+  y = x^{2}
+$$
+
+\section{Equation arrays}
+
+\begin{eqnarray}
+(a+b)^{2}&=&(a+b)(a+b) \nonumber \\
+&=& a^{2}+ab+ab+b^{2} \nonumber \\
+&=& a^{2}+2ab+b^{2}
+\end{eqnarray}
+
+__introduction__
+
+_introduction_
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
