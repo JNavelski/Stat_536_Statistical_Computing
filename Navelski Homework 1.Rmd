@@ -1,0 +1,151 @@
+---
+title: "Navelski Homework 1"
+author: "J. Navelski"
+date: "9/16/2020"
+output: html_document
+---
+
+\usepackage[labelfont={bf}]{caption} 
+\usepackage[unicode=true, breaklinks=true]{hyperref}
+\userpackage{lmodern}
+\usepackage{amssymb}
+\usepackage{changepage}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\newcommand{\Lagr}{\mathcal{L}}
+\newcommand{\Lagr}{L}
+\usepackage{ amssymb }
+\mathcal{L}
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r cars}
+summary(cars)
+```
+
+
+
+## Question 1
+#### Deriving the $E(X)$ for a Binomial RV
+
+Let, \[X \sim Bin(x;n,p)\]
+Then \[E(X) = E\left(\binom{n}{x} \cdot p^x(1-p)^{n-x} \right)\]
+\[ = \sum_{x=0}^{n}x\binom{n}{x} \cdot p^x(1-p)^{n-x}  \]
+Where, we know that the term where $x=0$ vanishes, and the final term of the $x!$ in the denominator cancels s.t.
+\[ = \sum_{x=1}^{n}\frac{n!}{(x-1)!(n-x)!} \cdot p^x (1-p)^{n-x}  \]
+This implies that we can let $y=x-1$ and $m=n-1$, and thus substitute for $x-1$ and $n=m+1$ into the last sum (and using the fact that the limits of $x=1$ and $x=n$ correspond to $y=0$ and $y=n-1=m$, respectivly) we get
+\[ = \sum_{y=0}^{m}\frac{(m+1)!}{y!(m-y)!} \cdot p^{y+1}(1-p)^{m-y}  \]
+\[ = \sum_{y=0}^{m}\frac{(m+1)!}{y!(m-y)!} \cdot p^{y+1}(1-p)^{m-y}  \]
+Where we can pull out the $(m+1)$ and $p$ s.t.
+\[ = (m+1)p\sum_{y=0}^{m}\frac{(m)!}{y!(m-y)!} \cdot p^{y}(1-p)^{m-y}  \]
+and the Binomial Therom says
+\[ (a+b)^{m}= \sum_{y=0}^{m}\frac{(m)!}{y!(m-y)!} \cdot a^{y}b^{m-y}  \]
+and thus implies that
+\[\implies  \hspace{.5cm} E(X) = (m+1)p(p+1-p)^{m}=np  \]
+since $n-1=m$ and $(p+1-p)^{m}=1$.
+\\
+\\
+\\
+\vspace{2cm}
+ 
+#### Deriving the $V(X)$ for a Binomial RV
+
+Simalarly to above, we can use a trick where we find $E(X(X-1))$ using the assumption that $y=x-2$ and $m=n-2$ s.t.
+\[E(X(X-1))=  \sum_{x=0}^{n}x(x-1)\binom{n}{x} \cdot p^x(1-p)^{n-x} \]
+\[ = \sum_{x=2}^{n}\frac{n!}{(x-2)!(n-x)!} \cdot p^x(1-p)^{n-x}  \]
+\[ = n(n-1)p^{2} \sum_{x=2}^{n}\frac{(n-2)!}{(x-2)!(n-x)!} \cdot (1-p)^{x-2}q^{n-x}  \]
+\[ = n(n-1)p^{2} \sum_{y=0}^{m}\frac{(m)!}{y!(m-y)!} \cdot p^{y}(1-p)^{m-y} \]
+\[ = n(n-1)p^{2} (p+1-p)^{m} \]
+\[\implies \hspace{.5cm} E(X(X-1)) = n(n-1)p^{2} \]
+That said, using the variance formula we can get the useful form of
+\[ V(X) = E[(X-E(X))(X-E(X))]\]
+\[ = E[X^{2}-2XE(X)+E(X)^{2}]\]
+\[ = E(X^{2})-E(X)^{2}\]
+\[ = E(X^{2})+E(X)-E(X)-E(X)^{2}\]
+\[ = E(X(X-1))+E(X)-E(X)^{2}\]
+and inserting our known results
+\[ = n(n-1)p^{2}+np-n^{2}p^{2}\]
+\[ =  n^{2}p^{2}-np^{2}+np-n^{2}p^{2}\]
+\[\implies \hspace{.5cm}V(X) =  np(1-p) \]
+
+## Question 2
+#### Deriving the MLE of an Exponential Distribution and a Normal Distribution
+$2.1)$ MLE of Exponetial Dist.
+
+Let a sample $x_{i}, \dots, x_{n}$ be drawn from a random variable $X\sim Exp(\lambda)$ with a probability drawn from a PDF of 
+
+  \begin{equation}
+    f_{X}(x_{1},\dots,x_{i},\dots,x_{n})=
+    \begin{cases}
+      \lambda exp(-\lambda  x_{i}), & \text{if}\ x_{i} \in  [0,\infty)\\
+      0, & \text{otherwise}
+    \end{cases}
+  \end{equation}
+
+To get the MLE of if this distribution we first use the joint probability distribution to get the likelihood function s.t.
+\[\Lagr (\lambda ; x_{1},\dots,x_{n}) =  \prod_{i=1}^{n}f(x_{i};\lambda)    \]
+\[ =  \prod_{i=1}^{n}\left(\lambda exp(-\lambda  x_{i})\right)  \]
+\[ =  \lambda^{n}exp\left(- \lambda \sum_{i=1}^{n}x_{i}  \right) \]
+and we log the liklihood of the function to make calculations easier s.t.
+\[ \mathcal{L} (\lambda ; x_{1},\dots,x_{n}) =    log\left(\lambda^{n}exp\left(- \lambda \sum_{i=1}^{n}x_{i}  \right) \right)   \]
+\[  =   log\left(\lambda^{n}\right) - \lambda \sum_{i=1}^{n}x_{i}\]
+Taking the derivite of the log-likelihood function with respect to the distribution's parameter $(\lambda)$ will ensure that we choose the optimal parameter that maximizes the joint probability of observing those data points s.t.
+\[  \frac{\partial \mathcal{L} (\lambda ; x_{1},\dots,x_{n})}{\partial \lambda} = \frac{n}{\lambda}-\sum_{i=1}^{n}x_{i}  \hspace{.5cm} =  \hspace{.5cm} 0 \]
+\[ \frac{n}{\lambda} = \sum_{i=1}^{n}x_{i} \]
+\[ \implies \lambda_{MLE} \equiv \hat{\lambda} = \frac{n}{\sum_{i=1}^{n}x_{i}} \]
+which is just the recipocal of the sample mean such that
+\[ \hat{\lambda} =  \frac{1}{\overline{x}}   \]
+
+
+$2.2)$ MLE of Normal Dist. with know variance ($\sigma$)
+
+
+Let a sample $x_{i}, \dots, x_{n}$ be drawn from a random variable $X\sim \mathcal{N} (\mu,\sigma^{2})$, where $\sigma_{2}$ is know, with a probability drawn from a PDF of 
+
+  \begin{equation}
+    f_{X}(x_{1},\dots,x_{i},\dots,x_{n})=
+    \begin{cases}
+      \frac{1}{\sigma \sqrt{2\pi}} exp\left(-\frac{1}{2}\left( \frac{x_{i}-\mu}{\sigma} \right)^{2}\right), & \text{if}\ x_{i} \in  (-\infty,\infty) \text{ and } \ \sigma^{2} \in  [0,\infty)  \\
+      0, & \text{otherwise}
+    \end{cases}
+  \end{equation}
+
+To get the MLE of if this distribution we first use the joint probability distribution to get the likelihood function s.t.
+\[\Lagr (\mu , \sigma^{2} ; x_{1},\dots,x_{n}) =  \prod_{i=1}^{n}f(x_{i};\mu,\sigma^{2})    \]
+\[ =  \prod_{i=1}^{n}\left( \frac{1}{\sigma\sqrt{2\pi}} exp\left(-\frac{1}{2}\left( \frac{x_{i}-\mu}{\sigma} \right)^{2}\right)\right)  \]
+\[ =  \left( \frac{n}{\sigma\sqrt{2\pi}} exp\left(-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu \right)^{2}\right)\right)  \]
+\[ =  \frac{n}{\sigma\sqrt{2\pi}} exp\left(-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu \right)^{2}\right) \]
+and we log the liklihood of the function to make calculations easier s.t.
+\[ \mathcal{L} (\mu, \sigma^{2} ; x_{1},\dots,x_{n}) =    log\left(  \frac{n}{\sigma\sqrt{2\pi}} exp\left(-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu \right)^{2}\right)  \right)   \]
+\[  =   -\frac{n}{2}log\left(\sqrt{2\pi}\right) -\frac{n}{2}log(\sigma^{2}) -\frac{1}{2\sigma^{2}} \sum_{i=1}^{n} \left( x_{i}-\mu \right)^{2}    \]
+Taking the derivite of the log-likelihood function with respect to the distribution's parameter $(\mu)$ will ensure that we choose the optimal parameter that maximizes the joint probability of observing those data points s.t.
+\[  \frac{\partial \mathcal{L} (\lambda ; x_{1},\dots,x_{n})}{\partial \mu} =   -2\frac{1}{2\sigma^{2}} \sum_{i=1}^{n} \left( x_{i}-\mu \right) (-1)   =  \hspace{.5cm} 0 \]
+\[    \frac{1}{2\sigma^{2}} \sum_{i=1}^{n} \left( x_{i}-\mu \right)  =  \hspace{.5cm} 0 \]
+\[    \sum_{i=1}^{n} \left( x_{i}\right)  =  \sum_{i=1}^{n} \left( \mu \right)\]
+\[ \implies \mu_{MLE} \equiv  \hat{\mu} =  \frac{\sum_{i=1}^{n} x_{i}}{n}    \]
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
