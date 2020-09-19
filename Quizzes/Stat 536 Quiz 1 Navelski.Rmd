@@ -1,0 +1,105 @@
+---
+title: "Stat 536 Quiz 1Navelski"
+author: "J. Navelski"
+date: "9/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Quiz 1
+#### Part 1
+
+```{r}
+
+nsim=2000
+ns=ceiling((nsim/2))
+u1=runif(ns,-1,1)
+u2=runif(ns,-1,1)
+s=u1^2 + u2^2
+y=cbind(u1,u2,s)
+
+for (i in 1:1000) {
+  while(y[i,3]>=1){
+    y[i,1] = runif(1,-1,1)
+    y[i,2] = runif(1,-1,1)
+    y[i,3] = y[i,1]^2 + y[i,2]^2
+    if(y[i,3]< 1 & 0<y[i,3])
+    break()
+}}
+
+x1=sqrt(-2*log(y[,3]))*(y[,1]/sqrt(y[,3]))
+x2=sqrt(-2*log(y[,3]))*(y[,2]/sqrt(y[,1]))
+
+```
+
+
+
+#### Part b
+```{r}
+
+sim_norm <- function(ns){
+  u1=runif(ns,-1,1)
+  u2=runif(ns,-1,1)
+  s=u1^2 + u2^2
+  y=cbind(u1,u2,s)
+
+for (i in 1:ns) {
+  while(y[i,3]>=1){
+    y[i,1] = runif(1,-1,1)
+    y[i,2] = runif(1,-1,1)
+    y[i,3] = y[i,1]^2 + y[i,2]^2
+    if(y[i,3]< 1 & 0<y[i,3])
+    break()
+  }
+  }
+
+x1=sqrt(-2*log(y[,3]))*(y[,1]/sqrt(y[,3]))
+x2=sqrt(-2*log(y[,3]))*(y[,2]/sqrt(y[,1]))
+return(hist(x1))
+}
+
+sim_norm(1000)
+
+
+
+```
+
+#### Part c
+```{r}
+
+hist(x1)
+
+
+```
+
+#### Part d
+
+```{r}
+
+
+```
+
+
+#### Part e
+
+```{r}
+
+### Any Univariate Normal Distribution
+# once we have a N(0,1) we can simulate any univeriate
+# or multivariate normal distribution we can define any univariate
+# normal distribution as x~N(0,1) ---> z=mu+si*x ~ N(mu,si^2)
+
+# norm_simz=function(ns,mu=0,var=1){
+#   x1=sim_norm(ns)
+#   z=mu+(sqrt(var))*x
+#   return(z)
+# }
+# 
+# z=norm_simz(1000,mu=3,var=2)
+# hist(z)
+
+
+```
